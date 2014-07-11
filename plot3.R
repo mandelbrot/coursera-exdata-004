@@ -1,5 +1,5 @@
 #lubridate packages for functions wday and days
-install.packages("lubridate")
+#install.packages("lubridate")
 library(lubridate)
 
 #read only 1/7/2007 and 2/7/2007
@@ -22,15 +22,19 @@ labDates <- c(dat$DateTime[1], dat$DateTime[nrow(dat)/2+1], dat$DateTime[nrow(da
 labDatesDay <-labDates
 labDatesDay[3] <- labDatesDay[3]+days(1)
 labDatesDay <- wday(labDatesDay, label=TRUE)
-  
-png(filename="plot2.png",width = 480, height = 480)
-plot(as.numeric(unlist(dat[3])),x=dat$DateTime, axes=FALSE, type = "l", 
+
+sequence <- seq(0,30,10)
+png(filename="plot3.png",width = 480, height = 480)
+plot(dat$Sub_metering_1,x=dat$DateTime, axes=FALSE, type = "l", 
      main = "",
-     xlab="", ylab="Global Active Power (kilowatts)")
+     xlab="", ylab="Energy sub metering")
 axis(side=2, at=sequence,
      labels=sequence)
 axis(1, at = labDates, labels = labDatesDay)
+lines(dat$Sub_metering_2,x=dat$DateTime, col="red")
+lines(dat$Sub_metering_3,x=dat$DateTime, col="blue")
+legend('topright', names(dat)[7:9] , 
+       lty=1, col=c('black', 'red', 'blue'), border="black")
 box()
 dev.off()
-
 
